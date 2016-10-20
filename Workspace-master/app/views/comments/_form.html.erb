@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="well col-md-8 col-md-offset-2 left">
+    <%= form_for ([@recipe, @recipe.comments.build]) do |f| %>
+      <div id="form-gap">
+        <%= f.label :'Rating:' %><div id="star-rating"></div>
+      </div>
+      <div id="form-gap">
+        <%= f.label :'content:' %>
+        <%= f.text_area :content, autofocus: true %>
+      </div>
+
+      <%= f.submit "Post comment" , class: 'btn btn-success', id: 'button' %>
+      <%= link_to 'Back', :back, class: 'btn btn-success', id: 'button' %>
+
+    <% end %>
+  </div>
+</div>
+<script>
+  $('#star-rating').raty({
+    path: '/assets/',
+    scoreName: 'comment[rating]'
+  });
+</script>

@@ -1,0 +1,21 @@
+<%= render 'shared/page_title', title: "Login" %>
+
+<div class="row">
+  <div class="well col-md-4 col-md-offset-4 left">
+    <%= form_tag '/login' do %>
+      <div id="form-gap">
+        <%= label_tag :Email %>
+        <%= text_field_tag :email,'', autofocus: true %>
+      </div>
+
+      <div id="form-gap">
+        <%= label_tag :Password %>
+        <%= password_field_tag :password %>
+      </div>
+
+      <div id="form-gap">
+        <%= submit_tag 'Login', class: 'btn btn-success' %>
+      </div>
+    <% end %>
+  </div>
+</div>

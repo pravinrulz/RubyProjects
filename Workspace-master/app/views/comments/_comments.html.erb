@@ -1,0 +1,30 @@
+<h4><strong>Comments:</strong></h4><%= link_to 'Return to Recipes Listing', recipes_path, class: 'btn btn-warning btn-small pull-right' %>
+<P>Average Rating: </P>
+<div class="star-rating" data-score= <%= @avg_rating %> ></div>
+<div class="well">
+  <% if @recipe.comments.any? %>
+    <% @recipe.comments.each do |comment| %>
+      <div class="well well-sm">
+        <div class="row">
+          <div class='col-sm-2 center'id='comment-img'>
+            <% if @recipe.chef.picture? %>
+              <%= link_to image_tag(comment.chef.picture.url, size:"80x80", class: 'img-circle'), chef_path(comment.chef) %>
+            <% else %>
+              <%= link_to image_tag('missing.png', size:"80x80", class: 'img-circle'), chef_path(comment.chef) %>
+            <% end %>
+          </div>
+          <div class='col-sm-6 left' id="comment-name">
+            <h4><strong><%= comment.chef.name.capitalize %></strong></h4>
+            <small class="quite"> posted: <%= time_ago_in_words(comment.created_at) %> ago</small>
+            <div class="star-rating" data-score= <%= comment.rating %> ></div>
+          </div>
+        </div></br>
+        <p><%= comment.content %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <h3 class='center'>No reviews just yet, would you like to add the first one!</h3>
+  <% end %>
+  <h2>Add a comment:</h2>
+  <%= render 'comments/form' %>
+</div>

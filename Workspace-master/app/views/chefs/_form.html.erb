@@ -1,0 +1,30 @@
+<%= render 'shared/errors', obj: @chef %>
+
+<div class="row">
+  <div class="well col-md-4 col-md-offset-4 left">
+    <%= form_for @chef, html: {multipart: true } do |f| %>
+      <div id="form-gap">
+        <%= f.label :Name %>
+        <%= f.text_field :name, autofocus: true %>
+      </div>
+      <div id="form-gap">
+        <%= f.label :Email%>
+      <%= f.email_field :email %>
+      </div>
+      <div id="form-gap">
+        <%= f.label :Password %>
+        <%= f.password_field :password %>
+      </div>
+      <div id="form-gap">
+        <span class="picture">
+          <%= f.label :'Upload an profile picture' %>
+          <%= f.file_field :picture, accept: 'image/jpeg, image/gif, image/png, image/jpg' %>
+        </span>
+      </div>
+
+      <%= f.submit(@chef.new_record? ? "Register" : "update profile", class: 'btn btn-success', id: 'button') %>
+      <%= link_to 'Back', :back, class: 'btn btn-success', id: 'button' %>
+
+    <%end %>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<%= render 'shared/errors', obj: @style %>
+
+<div class="row">
+  <div class="well col-md-4 col-md-offset-4 left">
+    <%= form_for @style do |f| %>
+      <div id="form-gap">
+        <%= f.label :name %>
+        <%= f.text_field :name, autofocus: true %>
+      </div>
+
+      <%= f.submit "Create style", class: 'btn btn-success', id: 'button' %>
+      <%= link_to 'Back', :back, class: 'btn btn-success', id: 'button' %>
+
+    <%end %>
+  </div>
+</div>

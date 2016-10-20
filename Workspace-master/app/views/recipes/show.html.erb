@@ -1,0 +1,56 @@
+<%= render 'shared/page_title', title: @recipe.name.upcase %>
+
+<div class="row">
+  <div class="col-md-4 pull-right center">
+    <% if @recipe.chef.picture? %>
+      <%= link_to image_tag(@recipe.chef.picture.url, size:"300x300", class: 'gravatar'), chef_path(@recipe.chef) %>
+    <% else %>
+      <%= link_to image_tag('missing.png', size:"300x300", class: 'gravatar'), chef_path(@recipe.chef) %>
+    <% end %>
+    <p>
+      <h5>Brought to you by: <%=@recipe.chef.name %></h5>
+    </p>
+  </div>
+  <div class="col-md-8 left">
+    <h3><%= @recipe.summary %>
+    <% if logged_in? and @recipe.chef == current_user %>
+      <%= link_to "Edit Recipe", edit_recipe_path(@recipe), class: 'btn btn-success pull-right' %></h3>
+    <% end %>
+    <hr/>
+    <div class="show_pic">
+      <%= image_tag(@recipe.picture.url, size:"350x200", class: 'gravatar') if @recipe.picture? %>
+    </div>
+    <div class="well">
+      <% if @recipe.styles.any? %>
+        <p>Styles: <%= render @recipe.styles %></p>
+      <% end %>
+      <% if @recipe.ingredients.any? %>
+        <p>Ingredients: <%= render @recipe.ingredients %></p>
+      <% end %>
+      <p><strong>Steps:</strong></p>
+      <p><%= simple_format(@recipe.description) %></p>
+      <div class="pull-right">
+        <%= link_to like_recipe_path(@recipe, like:true), method: :post do %>
+          <i class="glyphicon glyphicon-thumbs-up"></i>&nbsp <%= @recipe.thumbs_up_total %>
+        <% end %> &nbsp;&nbsp;&nbsp;&nbsp;
+        <%= link_to like_recipe_path(@recipe, like:false), method: :post do %>
+          <i class="glyphicon glyphicon-thumbs-down"></i>&nbsp <%= @recipe.thumbs_down_total %>
+        <% end %>&nbsp;&nbsp;</br>
+        <div id='social-share'><%= social_share_button_tag(@recipe.name, :popup => "true") %></div>
+      </div><br><br>
+    </div>
+    <hr/>
+<%= render 'comments/comments' %>
+
+  </div>
+</div></br></br></br></br>
+
+<script>
+    $('.star-rating').raty({
+      path: '/assets/',
+      readOnly: true,
+      score: function() {
+            return $(this).attr('data-score');
+    }
+  });
+</script>

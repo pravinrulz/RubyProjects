@@ -1,0 +1,68 @@
+<%= render 'shared/page_title', title: "All Recipes" %>
+
+<ul class="nav nav-tabs">
+  <li class="active">
+    <%= link_to "Recipes", recipes_path %>
+  </li>
+  <li>
+    <%= link_to "Chefs", chefs_path %>
+  </li>
+</ul></br>
+
+<%= will_paginate %>
+
+<% @recipes.each do |recipe| %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="well">
+      <div class="row">
+        <div class="chef_info left">
+           <% if recipe.chef.picture? %>
+            <%= link_to image_tag(recipe.chef.picture.url, size:"120", class: 'gravatar chef_pic'), chef_path(recipe.chef) %>
+          <% else %>
+           <%= link_to image_tag('missing.png', size:"120", class: 'gravatar chef_pic'), chef_path(recipe.chef) %>
+          <% end %>
+          <h5>Chef Name: <%= recipe.chef.name %></h5>
+
+        </div>
+        <div class='col-md-6' id='recipe_info'>
+          <h4><%= link_to recipe.name.capitalize, recipe_path(recipe) %></h4>
+          <p>Summary: <%= recipe.summary %></p>
+          <% if recipe.styles.any? %>
+            <p>Styles: <%= render recipe.styles %></p>
+          <% end %>
+          <% if recipe.ingredients.any? %>
+            <p>Ingredients: <%= render recipe.ingredients %></p>
+          <% end %>
+          <div class="pull-right">
+            <%= link_to like_recipe_path(recipe, like:true), method: :post do %>
+              <i class="glyphicon glyphicon-thumbs-up"></i>&nbsp; <%= recipe.thumbs_up_total %>
+            <% end %> &nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to like_recipe_path(recipe, like:false), method: :post do %>
+              <i class="glyphicon glyphicon-thumbs-down"></i>&nbsp; <%= recipe.thumbs_down_total %>
+            <% end %>
+          </div></br>
+          <div class="pull-right" id='social-share'><%= social_share_button_tag(recipe.name, :popup => "true") %></div>
+          <p>
+            <span class="quite">
+              <small> created: <%= time_ago_in_words(recipe.created_at) %> ago</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <small> updated: <%= time_ago_in_words(recipe.updated_at) %> ago</small>
+            </span>
+          </p>
+        </div>
+        <div>
+          <% if recipe.picture? %>
+            <%= link_to image_tag(recipe.picture.url, size:"250x150", class: 'gravatar recipe_pic'), recipe_path(recipe) if recipe.picture? %>
+          <% else %>
+            <%= link_to image_tag('index.png', size:"250x150", class: 'gravatar recipe_pic'), recipe_path(recipe) %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <hr/>
+<% end %>
+
+<%= will_paginate %>
